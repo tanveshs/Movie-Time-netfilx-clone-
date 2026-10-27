@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MovieTime - Browse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/browse.css">
+  
+  <!-- Data and Logic -->
+  <script src="js/auth.js"></script>
+  <script src="js/movies.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/my-list.js"></script>
+  <script src="js/movies-page.js" defer></script>
+
+  <script>
+    // Protect this route
+    requireLogin();
+  </script>
+</head>
+<body>
+  <!-- Authenticated Navbar -->
+  <nav class="nav-auth" id="navbar">
+    <a href="browse.html" class="nav__logo" aria-label="MovieTime Home">
+      <span class="brand-logo">MOVIE<span class="brand-logo__accent">TIME</span></span>
+    </a>
+    
+    <ul class="nav-links">
+      <li><a href="browse.html">Home</a></li>
+      <li><a href="movies.html" class="active">Movies</a></li>
+      <li><a href="series.html">Series</a></li>
+      <li><a href="anime.html">Anime</a></li>
+      <li><a href="my-list.html">My List</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="white">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input type="text" id="search-input" placeholder="Titles, people, genres">
+      </div>
+      
+      <div class="profile-dropdown">
+        <img src="https://ui-avatars.com/api/?name=User&background=e50914&color=fff" alt="Profile" class="profile-img">
+        <div class="dropdown-menu">
+          <a href="#" style="pointer-events: none;"><span class="js-display-username">User</span></a>
+          <div class="divider" style="height: 1px; margin: 0.5rem 0;"></div>
+          <a href="profile.html">Account Settings</a>
+          <a href="#" class="js-logout-btn">Sign out of MovieTime</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section (Dynamically populated) -->
+  <header class="browse-hero" id="hero-section">
+    <img src="" alt="Hero Background" class="browse-hero__bg" id="hero-bg">
+    <div class="browse-hero__overlay"></div>
+    <div class="browse-hero__content">
+      <h1 class="browse-hero__title" id="hero-title">Loading...</h1>
+      <p class="browse-hero__desc" id="hero-desc"></p>
+      <div class="browse-hero__buttons">
+        <a href="#" class="btn btn--primary btn--sm" id="hero-play" style="padding: 0.5rem 1.5rem; font-size: 1.1rem;">
+          ▶ Play
+        </a>
+        <a href="#" class="btn btn--secondary btn--sm" id="hero-info" style="padding: 0.5rem 1.5rem; font-size: 1.1rem;">
+          ⓘ More Info
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content Rows -->
+  <main id="main-content" style="margin-top: -5rem; position: relative; z-index: 2;">
+    <!-- Rows will be injected here by browse.js -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" style="margin-top: 3rem;">
+    <div class="footer__container container">
+      <p class="footer__copyright">© 2026 MovieTime. Built for educational/demo purposes.</p>
+    </div>
+  </footer>
+</body>
+</html>

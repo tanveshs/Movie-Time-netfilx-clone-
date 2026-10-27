@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MovieTime - Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Specialized Login Page Styles */
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('assets/images/movietime_hero_bg.png') no-repeat center center/cover;
+    }
+    .login-header {
+      padding: var(--space-md) var(--space-lg);
+    }
+    .login-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-md);
+    }
+    .login-card {
+      background-color: rgba(0, 0, 0, 0.75);
+      border-radius: var(--radius-md);
+      padding: 3rem 4rem;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    }
+    .login-card__title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+    .login-card form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .login-card .form-group__input {
+      background-color: #333;
+      border: none;
+      border-radius: var(--radius-sm);
+    }
+    .login-card .form-group__input:focus {
+      background-color: #454545;
+    }
+    .login-card .form-group__label {
+      color: #8c8c8c;
+    }
+    .login-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #b3b3b3;
+      font-size: 0.85rem;
+      margin-top: -0.5rem;
+    }
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    .login-link {
+      color: #b3b3b3;
+      text-decoration: none;
+    }
+    .login-link:hover {
+      text-decoration: underline;
+    }
+    .signup-prompt {
+      margin-top: 2rem;
+      color: #737373;
+    }
+    .signup-prompt a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .signup-prompt a:hover {
+      text-decoration: underline;
+    }
+    .form-group__error {
+      color: var(--color-accent);
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+  </style>
+  <script src="js/auth.js"></script>
+  <script>
+    // Redirect if already logged in
+    redirectIfLoggedIn();
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const loginForm = document.getElementById("login-form");
+      const emailInput = document.getElementById("login-email");
+      const passwordInput = document.getElementById("login-password");
+      const togglePasswordBtn = document.getElementById("toggle-password");
+      const errorMsg = document.getElementById("login-error");
+
+      // Show/Hide Password
+      togglePasswordBtn.addEventListener("click", function() {
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
+        this.textContent = type === "password" ? "Show" : "Hide";
+      });
+
+      loginForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        
+        // Reset errors
+        errorMsg.style.display = "none";
+        emailInput.classList.remove("form-group__input--error");
+        passwordInput.classList.remove("form-group__input--error");
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (email === "") {
+          emailInput.classList.add("form-group__input--error");
+          errorMsg.textContent = "Please enter your email or username.";
+          errorMsg.style.display = "block";
+          return;
+        }
+
+        if (password === "") {
+          passwordInput.classList.add("form-group__input--error");
+          errorMsg.textContent = "Please enter your password.";
+          errorMsg.style.display = "block";
+          return;
+        }
+
+        // Simulate Authentication
+        const storedUser = getCurrentUser();
+
+        if (storedUser && (storedUser.email === email || storedUser.username === email)) {
+          // In a real app we would check hashed password. Here we simulate success.
+          // For demo, we just require any password length > 0
+          loginUser();
+          window.location.href = "browse.html";
+        } else {
+          // Authentication Failed
+          errorMsg.textContent = "Sorry, we can't find an account with this email/username.";
+          errorMsg.style.display = "block";
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="login-wrapper">
+    <header class="login-header container">
+      <a href="index.html" class="nav__logo" aria-label="MovieTime Home">
+        <span class="brand-logo">MOVIE<span class="brand-logo__accent">TIME</span></span>
+      </a>
+    </header>
+
+    <main class="login-body">
+      <div class="login-card">
+        <h1 class="login-card__title">Sign In</h1>
+        
+        <form id="login-form">
+          <div id="login-error" class="form-group__error" style="margin-bottom: 0.5rem; font-size: 0.9rem;"></div>
+          
+          <div class="form-group">
+            <input type="text" id="login-email" class="form-group__input" placeholder=" ">
+            <label for="login-email" class="form-group__label">Email or username</label>
+          </div>
+          
+          <div class="form-group">
+            <input type="password" id="login-password" class="form-group__input" placeholder=" " style="padding-right: 4rem;">
+            <label for="login-password" class="form-group__label">Password</label>
+            <button type="button" id="toggle-password" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: #8c8c8c; cursor: pointer; font-size: 0.85rem;">Show</button>
+          </div>
+          
+          <button type="submit" class="btn btn--primary btn--lg" style="margin-top: 1rem;">Sign In</button>
+          
+          <div class="login-actions">
+            <label class="remember-me">
+              <input type="checkbox" checked>
+              <span>Remember me</span>
+            </label>
+            <a href="#" class="login-link">Forgot password?</a>
+          </div>
+        </form>
+        
+        <div class="signup-prompt">
+          New to MovieTime? <a href="index.html">Sign up now.</a>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MovieTime - Details</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/browse.css">
+  <link rel="stylesheet" href="css/details.css">
+  
+  <!-- Data and Logic -->
+  <script src="js/auth.js"></script>
+  <script src="js/movies.js"></script>
+  <script src="js/my-list.js"></script>
+  <script src="js/details.js" defer></script>
+
+  <script>
+    requireLogin();
+  </script>
+</head>
+<body>
+  <!-- Authenticated Navbar -->
+  <nav class="nav-auth" id="navbar" style="background-color: var(--color-bg);">
+    <a href="browse.html" class="nav__logo" aria-label="MovieTime Home">
+      <span class="brand-logo">MOVIE<span class="brand-logo__accent">TIME</span></span>
+    </a>
+    
+    <ul class="nav-links">
+      <li><a href="browse.html">Home</a></li>
+      <li><a href="movies.html">Movies</a></li>
+      <li><a href="series.html">Series</a></li>
+      <li><a href="anime.html">Anime</a></li>
+      <li><a href="my-list.html">My List</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="profile-dropdown">
+        <img src="https://ui-avatars.com/api/?name=User&background=e50914&color=fff" alt="Profile" class="profile-img">
+        <div class="dropdown-menu">
+          <a href="profile.html">Account Settings</a>
+          <a href="#" class="js-logout-btn">Sign out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="details-error" style="display: none; text-align: center; padding: 5rem 0;">
+    <h2>Sorry, we couldn't find that title.</h2>
+    <a href="browse.html" class="btn btn--primary" style="margin-top: 1rem;">Back to Home</a>
+  </div>
+
+  <div id="details-container">
+    <div class="details-hero">
+      <img src="" alt="Backdrop" class="details-hero__bg" id="detail-bg">
+      <div class="details-hero__overlay"></div>
+    </div>
+
+    <main class="details-content container">
+      <img src="" alt="Poster" class="details-poster" id="detail-poster">
+      
+      <div class="details-info">
+        <h1 class="details-title" id="detail-title">Loading...</h1>
+        
+        <div class="details-meta">
+          <span class="rating" id="detail-rating">⭐ --</span>
+          <span id="detail-year">----</span>
+          <span id="detail-duration">--</span>
+          <span id="detail-type" style="border: 1px solid #555; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem;">--</span>
+        </div>
+
+        <div class="details-actions">
+          <a href="#" class="btn btn--primary btn--lg" id="btn-watch">
+            ▶ Play
+          </a>
+          <button class="btn btn--secondary btn--lg" id="btn-mylist" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span>+</span> My List
+          </button>
+        </div>
+
+        <p class="details-desc" id="detail-desc"></p>
+
+        <div class="details-credits">
+          <span>Starring:</span> <strong id="detail-cast"></strong>
+          <span>Director:</span> <strong id="detail-director"></strong>
+          <span>Genres:</span> <strong id="detail-genres"></strong>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
